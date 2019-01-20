@@ -1,14 +1,15 @@
-local mod = RegisterMod("Lucky!1!", 1)
+local lucky_challenge = RegisterMod("Lucky!1!", 1)
 local game = Game()
 
 local Challenges = {
 	CHALLENGE_LUCKY = Isaac.GetChallengeIdByName("Lucky!1!")
 }
 
---Set starting coins to 0 and add 10 luck
-function mod:onPlayerInit(player)
+--Set starting coins to 0, 3 soul hearts, and add 10 luck
+function lucky_challenge:onPlayerInit(player)
 	if game.Challenge == Challenges.CHALLENGE_LUCKY then 
-	player:AddCoins(-99)
+	player:AddCoins(-10)
+	player:AddSoulHearts(-2)
 
 	    --Add 10 Luck
 		for i = 1, 10, 1	do
@@ -21,7 +22,7 @@ end
 local currCoins = 0;
 local isStarted = false;
  
-function mod:setStartingConsumables()
+function lucky_challenge:setStartingConsumables()
 	player = Isaac.GetPlayer(0);
 	if game.Challenge == Challenges.CHALLENGE_LUCKY then 
 		if(isStarted == false) then
@@ -31,7 +32,7 @@ function mod:setStartingConsumables()
 	end
 end
 
-function mod:checkConsumables()
+function lucky_challenge:checkConsumables()
     player = Isaac.GetPlayer(0);
 	if game.Challenge == Challenges.CHALLENGE_LUCKY then 
    
@@ -42,6 +43,6 @@ function mod:checkConsumables()
 			currCoins = player:GetNumCoins();
 	end
 end
-mod:AddCallback(ModCallbacks.MC_POST_UPDATE, mod.setStartingConsumables);
-mod:AddCallback(ModCallbacks.MC_POST_UPDATE, mod.checkConsumables);
-mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, mod.onPlayerInit)
+lucky_challenge:AddCallback(ModCallbacks.MC_POST_UPDATE, lucky_challenge.setStartingConsumables);
+lucky_challenge:AddCallback(ModCallbacks.MC_POST_UPDATE, lucky_challenge.checkConsumables);
+lucky_challenge:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, lucky_challenge.onPlayerInit)
