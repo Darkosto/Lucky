@@ -22,6 +22,7 @@ local currCoins = 0;
 local isStarted = false;
  
 function mod:setStartingConsumables()
+	player = Isaac.GetPlayer(0);
 	if game.Challenge == Challenges.CHALLENGE_LUCKY then 
 		if(isStarted == false) then
 			currCoins = player:GetNumCoins();
@@ -36,11 +37,11 @@ function mod:checkConsumables()
    
 		if(currCoins < player:GetNumCoins()) then
 			player:UsePill(PillEffect.PILLEFFECT_LUCK_DOWN, PillColor.PILL_NULL)
+			player:EvaluateItems()
 		end
-    currCoins = player:GetNumCoins();
+			currCoins = player:GetNumCoins();
+	end
 end
-end
- 
 mod:AddCallback(ModCallbacks.MC_POST_UPDATE, mod.setStartingConsumables);
 mod:AddCallback(ModCallbacks.MC_POST_UPDATE, mod.checkConsumables);
 mod:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, mod.onPlayerInit)
